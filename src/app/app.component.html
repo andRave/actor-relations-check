@@ -1,0 +1,75 @@
+<div class="app">
+  <div class="input-actor">
+    <input #actorInput type="text" (keydown.enter)="addNewActor(actorInput)" placeholder="Add actor">
+  </div>
+
+  <div class="actors-table" [style]="{'margin-top': '10px'}">
+    @for (actor of actors; track actor.id) {
+      <div class="actors-section">
+        <div class="actor" [style]="{'background-color': actor.color}">
+          @if (actor.isEditMode) {
+            <input #nameInput type="text" [(ngModel)]="actor.name" (keydown.enter)="editActor(actor)">
+          } @else {
+            <span>{{actor.name}}</span>
+          }
+          <div>
+            @if (actor.isEditMode) {
+              <button class="edit-name-btn" (click)="editActor(actor)"><span>&#10003;</span></button>
+            } @else {
+              <button class="edit-name-btn" (click)="editActor(actor)">✎</button>
+            }
+            <button class="delete-name-btn" (click)="removeActor(actor.id)">X</button>
+          </div>
+        </div>
+        @for (role of actor.roles; track role; ; let i = $index) {
+          <div class="role" [style]="{'background-color': role.isRelationError ? 'red' : null}">
+            <span [dndDraggable]="role.roleName">{{ i + 1 }}. {{role.roleName}}</span>
+            <button class="delete-role-btn" (click)="removeRole(actor, role)">X</button>
+          </div>
+        }
+        <input #roleInput type="text" (keydown.enter)="setRole(actor, roleInput)" class="role-input" placeholder="Add role">
+      </div>
+    }
+  </div>
+
+  <div class="relations-table">
+    @for(actor of actors; track actor.id) {
+      <div class="relation-item">
+        <span class="actor-name" [style]="{'background-color': actor.color}">{{ actor.name }}</span>
+        @for (role of actor.roles; track role) {
+          <div class="actor-relations">
+            <div>{{ role.roleName }}</div>
+            <textarea
+              dndDropzone
+              type="text"
+              [(ngModel)]="role.relations"
+              (ngModelChange)="calculateRelations(actor)"
+              (dndDrop)="onDrop($event, actor, role)">
+            </textarea>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="buttons">
+    @if (!isSaveMode) {
+      <button type="button" (click)="isSaveMode = !isSaveMode">SAVE LIST</button>
+    } @else {
+      <div>
+        <input #saveInput type="text" (keydown.enter)="saveList(saveInput.value)" placeholder="Type list name">
+        <button type="button" class="edit-name-btn" (click)="saveList(saveInput.value)"><span>&#10003;</span></button>
+      </div>
+    }
+    <button *ngIf="savedList.length" type="button" (click)="showedSavedList = !showedSavedList">{{showedSavedList ? "HIDE LIST" : "LOAD LIST"}}</button>
+    @if (showedSavedList) {
+      @for (list of savedList; let i = $index; track list) {
+        <div (click)="load(i)" class="list">
+          <div class="list-element">{{list.listName}}</div>
+          <button class="delete-role-btn" (click)="removeListElement(i)">X</button>
+        </div>
+      }
+    }
+    <button type="button" (dblclick)="reset()">RESET ALL</button>
+  </div>
+</div>

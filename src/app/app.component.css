@@ -1,0 +1,121 @@
+.app {
+  display: flex;
+  flex-direction: column;
+
+  .actors-table {
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+
+    .actors-section {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      margin: 10px;
+
+      .actor {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px 0;
+        border-radius: 5px;
+        padding: 0 3px;
+
+        input {
+          margin: auto;
+          max-width: 100px;
+          border-radius: 5px;
+        }
+      }
+
+      .role {
+        display: flex;
+        align-items: center;
+        padding: 2px 0;
+      }
+
+      .role-input {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .input-actor {
+    display: flex;
+    justify-content: center;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      margin: 15px;
+    }
+  }
+
+  .list {
+    display: flex;
+    align-items: center;
+
+    .list-element {
+      cursor: pointer;
+      margin: 5px;
+      background-color: #e5b95b;
+      border-radius: 3px;
+      padding: 3px;
+    }
+  }
+
+  .delete-role-btn,
+  .delete-name-btn,
+  .edit-name-btn {
+    background-color: #472121;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 1px 5px;
+    margin-left: 5px;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+  }
+
+  .delete-role-btn:hover,
+  .delete-name-btn:hover,
+  .edit-name-btn:hover {
+    background-color: #793636;
+  }
+
+  .relations-table {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+
+    .relation-item {
+      margin: 5px;
+
+      .actor-name {
+        display: flex;
+        justify-content: space-around;
+        border-radius: 5px;
+      }
+    }
+
+    .actor-relations {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0;
+
+      textarea {
+        field-sizing: content;
+        max-width: 200px;
+        min-width: 200px;
+      }
+    }
+  }
+}
